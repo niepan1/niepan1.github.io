@@ -1,0 +1,16 @@
+---
+layout:     post
+title:      "Welcome to Whoa's Blog"
+subtitle:   "\"Hello World, Hello Blog\""
+date:       2018-09-19
+author:     "xx"
+header-img: "img/lifeisstrange.jpg"
+tags:
+    - 生活
+---
+
+
+## 为什么开这个？
+只是记录一下一些操作步骤，让自己要用的时候快速一点并且避开一些已经踩过的坑
+<br/>然后就是为了不让我的域名那么的单调
+<br/>并且，由于存放在`GitHub Pages`上，不怕丢失，<del>而且GitHub在日本有CDN，访问速度也是可以的，笑</del>
