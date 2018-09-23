@@ -93,37 +93,16 @@ service-worker: false
 # Friends
 friends: [
     {
-    #     title: "Su",
-    #     href: "http://su.gallery/"
-    # },{
-        title: "乱序",
-        href: "http://mida.re/"
+         title: "网盘",
+         href: "https://delta.whoa.top/"
+     },{
+        title: "贴吧云签到",
+        href: "http://sign.whoa.top/"
     },{
-        title: "前端外刊评论",
-        href: "http://qianduan.guru/"
+        title: "ARIA2网页界面",
+        href: "https://dl.whoa.top/"
     },{
-        title: "天镶的博客",
-        href: "http://lingyu.wang/"
-    },{
-        title: "Luke 的自留地",
-        href: "http://hmqk1995.github.io"
-    },{
-        title: "Ebn's Blog",
-        href: "http://ebnbin.com/"
-    },{
-        title: "SmdCn's Blog",
-        href: "http://blog.smdcn.net"
-    },{
-        title: "David's Game",
-        href: "https://www.ruoyaowu.com/"
-    },{
-        title: "DHong Say",
-        href: "http://dhong.co"
-    },{
-        title: "尹峰以为",
-        href: "http://ingf.github.io/"
-    },{
-        title: "解旻的博客",
-        href: "http://xieminis.me/"
+        title: "SIGMA",
+        href: "http://sigma.whoa.top//"
     }
 ]

@@ -14,4 +14,4 @@ tags:
 只是记录一下一些操作步骤，让自己要用的时候快速一点并且避开一些已经踩过的坑
 <br/>然后就是为了不让我的域名那么的单调
 <br/>并且，由于存放在`GitHub Pages`上，不怕丢失
-![](http://pan.aegis.ooo/others/life%20is%20strange.jpg)
+![](https://pan.aegis.ooo/others/life%20is%20strange.jpg)
