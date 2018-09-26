@@ -2,7 +2,7 @@
 layout:     post
 title:      "地平线:零之黎明"
 subtitle:   "挺不错的一个索尼游戏"
-date:       2018-10-1
+date:       2018-9-17
 author:     "xx"
 header-img: "img/bg-01.png"
 tags:
