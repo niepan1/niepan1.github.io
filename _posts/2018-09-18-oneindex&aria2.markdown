@@ -8,6 +8,8 @@ tags:
     - 技术
 ---
 
+[演示:https://delta.whoa.top/](https://delta.whoa.top/)
+
 <!-- TOC -->
 
 - [安装宝塔面板](#安装宝塔面板)
@@ -21,6 +23,27 @@ tags:
 要求有一个Onedrive非中国区账户，容量随意,如：
 ![img](/img/post/oneindex/09.png)
 放置下载的文件的目录为`/home/download`，可自行修改
+
+
+视频外链示例:
+```
+<video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="800" height="600" controls="controls">
+Your browser does not support the video tag.
+</video>
+```
+<video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="800" height="600" controls="controls">
+Your browser does not support the video tag.
+</video>
+
+音频外链示例:
+```
+<audio controls="">
+<source src="https://delta.whoa.top/others/GlassWalls.mp3">
+</audio>
+```
+<audio controls="">
+<source src="https://delta.whoa.top/others/GlassWalls.mp3">
+</audio>
 
 
 # 安装宝塔面板
