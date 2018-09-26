@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "安装Oneindex及配置aria2下载完成后自动上传至Onedirve"
-date:       2018-09-13
+date:       2018-09-12
 author:     "xx"
 header-img: "img/bg-01.png"
 tags:
