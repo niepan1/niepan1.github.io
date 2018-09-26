@@ -26,6 +26,7 @@ tags:
 
 
 视频外链示例:
+Alit Battle Angel
 ```
 <video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="800" height="600" controls="controls">
 </video>
@@ -34,6 +35,7 @@ tags:
 </video>
 
 音频外链示例:
+GlassWalls.mp3
 ```
 <audio controls="">
 <source src="https://delta.whoa.top/others/GlassWalls.mp3">
