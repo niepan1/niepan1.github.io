@@ -1,14 +1,14 @@
 ---
 layout:     post
 title:      "安装Oneindex及配置aria2下载完成后自动上传至Onedirve"
-date:       2018-09-19
+date:       2018-09-13
 author:     "xx"
 header-img: "img/bg-01.png"
 tags:
     - 技术
 ---
 
-[演示:https://delta.whoa.top/](https://delta.whoa.top/)
+演示地址:https://delta.whoa.top/
 
 <!-- TOC -->
 
@@ -28,11 +28,9 @@ tags:
 视频外链示例:
 ```
 <video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="800" height="600" controls="controls">
-Your browser does not support the video tag.
 </video>
 ```
 <video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="800" height="600" controls="controls">
-Your browser does not support the video tag.
 </video>
 
 音频外链示例:
@@ -220,8 +218,8 @@ Aria2 简单配置信息：
 
 参考资料:
 
-[https://moeclub.org/2017/03/17/24/](https://moeclub.org/2017/03/17/24/)
+https://moeclub.org/2017/03/17/24/
 
-[https://www.234du.com/1171.html](https://www.234du.com/1171.html)
+https://www.234du.com/1171.html
 
-[https://www.234du.com/1170.html](https://www.234du.com/1170.html)
+https://www.234du.com/1170.html
