@@ -2,7 +2,7 @@
 layout:     post
 title:      "Welcome to Whoa's Blog"
 subtitle:   "\"Hello World, Hello Blog\""
-date:       2018-09-19
+date:       2018-08-17
 author:     "xx"
 header-img: "img/lifeisstrange.jpg"
 tags:

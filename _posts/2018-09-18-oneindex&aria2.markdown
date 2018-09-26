@@ -1,0 +1,204 @@
+---
+layout:     post
+title:      "安装Oneindex及配置aria2下载完成后自动上传至Onedirve"
+date:       2018-09-19
+author:     "xx"
+header-img: "img/bg-01.png"
+tags:
+    - 技术
+---
+
+<!-- TOC -->
+
+- [安装宝塔面板](#安装宝塔面板)
+- [安装并配置aria2](#安装并配置aria2)
+- [安装Oneindex](#安装oneindex)
+- [配置Onedrive上传](#配置onedrive上传)
+- [使用](#使用)
+
+<!-- /TOC -->
+
+要求有一个Onedrive非中国区账户，容量随意,如：
+![img](/img/post/oneindex/09.png)
+放置下载的文件的目录为`/home/download`，可自行修改
+
+
+# 安装宝塔面板
+Centos安装命令：
+```yum install -y wget && wget -O install.sh http://download.bt.cn/install/install.sh && sh install.sh```
+
+Ubuntu/Deepin安装命令：
+```wget -O install.sh http://download.bt.cn/install/install-ubuntu.sh && sudo bash install.sh```
+
+Debian安装命令：
+```wget -O install.sh http://download.bt.cn/install/install-ubuntu.sh && bash install.sh```
+
+Fedora安装命令:
+```wget -O install.sh http://download.bt.cn/install/install.sh && bash install.sh```
+
+安装完成后登陆面板，安装LNMP(PHP >= 5.6)
+![img](/img/post/oneindex/02.png)
+
+# 安装并配置aria2
+在安装LNMP过程中，可以不用等它安装完，这边同时安装aria2
+
+Aria2一键安装脚本（逗比制作）
+
+`wget -N --no-check-certificate https://softs.loan/Bash/aria2.sh && chmod +x aria2.sh && bash aria2.sh`
+
+如果上面这个脚本无法下载，尝试使用备用下载：
+
+`wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/aria2.sh && chmod +x aria2.sh && bash aria2.sh`
+
+然后输入 `bash aria2.sh`，选择修改配置文件，修改dir为`/home/download`,并在最后插入新的一行`on-download-complete=/root/autoupload.sh`
+
+![img](/img/post/oneindex/05.png)
+
+修改完后会弹回关键aria2配置信息，记下来(类似如下)
+```
+Aria2 简单配置信息：
+
+ 地址	: 1.1.1.1
+ 端口	: 6800
+ 密码	: cde45d8274b598e96ae2
+ 目录	: /home/download
+
+[信息] Aria2 启动成功 !
+```
+
+在/root目录下新建文件autoupload.sh
+
+```
+#!/bin/bash
+num="$2"
+path="$3" 
+downloadpath='/home/download'
+ 
+if [ $num -eq 0 ]
+    then
+      exit 0
+fi
+ 
+function getdir(){
+IFS=$'\n';for file in `ls "$1"`
+    do
+        if [ -d "$1/$file" ]  
+        then
+            getdir "$1/$file"
+        else
+            if [ "${1%/*}" = "$downloadpath" ] && [ $num -eq 1 ]
+            then
+                onedrive "$1"
+            elif [ $num -eq 1 ] 
+            then
+                onedrive "$1/$file"
+            else
+                onedrive -u "$downloadpath" "$1/$file"
+                fi
+        fi
+    done
+}
+ 
+while true; do
+filepath=$path 
+path=${path%/*};   
+if [ "$path" = "$downloadpath" ] 
+    then  
+      getdir "$filepath"
+      if [ -d $filepath ]
+      then
+        rm -r "$filepath"
+      else
+        rm  "$filepath"
+      fi
+      echo 3 > /proc/sys/vm/drop_caches
+      swapoff -a && swapon -a
+      exit 0
+fi
+done
+```
+
+给予脚本执行权`chmod +x autoupload.sh`,并在面板放行aria2端口(教程为6800，可自行设定)
+
+![img](/img/post/oneindex/03.png)
+
+# 安装Oneindex
+到`https://github.com/donwa/oneindex`下载代码，放到网站目录下，过程略
+
+网站伪静态代码(可选)
+```
+if (!-f $request_filename){
+set $rule_0 1$rule_0;
+}
+if (!-d $request_filename){
+set $rule_0 2$rule_0;
+}
+if ($rule_0 = "21"){
+rewrite ^/(.*)$ /index.php?/$1 last;
+}
+```
+![img](/img/post/oneindex/07.png)
+
+配置信息获取方法如图
+
+![img](/img/post/oneindex/08.gif)
+
+安装完成后后台登陆地址为: `http://你的域名或ip/?/admin`
+
+刷新参数用`crontab -e`录入定时任务即可
+
+# 配置Onedrive上传
+`wget --no-check-certificate -q -O /tmp/OneDrive.sh "https://raw.githubusercontent.com/weiyidu/OneDrive/master/OneDrive.sh" && chmod +x /tmp/OneDrive.sh && bash /tmp/OneDrive.sh`
+
+请将三个参数填入/usr/local/etc/OneDrive/onedrive.cfg.
+如下示例:
+```
+export api_client_id="ea2b36f6-b8ad-40be-bc0f-e5e4a4a7d4fa"
+export api_client_secret="h27zG8pr8BNsLU0JbBh5AOznNS5Of5Y540l/koc7048="
+export api_reply_url="https://onedrive.live.com/about/business/"
+```
+
+1、运行语句 `onedrive -a`
+
+2、将返回的网址复制到浏览器中打开
+
+3、登陆你的OneDrive for Business账号
+
+4、登陆成功后复制地址栏中的地址,并提取code的字段(code=后面至&前面，即code和session之间的那段)
+
+5、粘贴至终端,并敲回车键
+
+如果返回错误信息,请检查code字段,或重新生成密钥
+
+如果返回以下字段:
+
+`It seems like we have a refresh token, so we are ready to go`
+
+恭喜你,设置成功!
+
+如果返回错误信息,请检查code字段,或重新生成密钥.
+
+# 使用
+懒得自己装aria2面板了，直接打开 [http://aria2.net/](http://aria2.net/)
+
+选择AriaNg设置中的RPC项，填入正确的IP地址和密匙，上面提到
+```
+Aria2 简单配置信息：
+
+ 地址	: 1.1.1.1
+ 端口	: 6800
+ 密码	: cde45d8274b598e96ae2
+ 目录	: /home/download
+
+[信息] Aria2 启动成功 !
+```
+
+那么IP就是 `1.1.1.1`,密匙是`cde45d8274b598e96ae2`,下载时确认下载目录是否为`/home/download`
+
+参考资料:
+
+[https://moeclub.org/2017/03/17/24/](https://moeclub.org/2017/03/17/24/)
+
+[https://www.234du.com/1171.html](https://www.234du.com/1171.html)
+
+[https://www.234du.com/1170.html](https://www.234du.com/1170.html)
