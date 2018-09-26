@@ -20,7 +20,7 @@ tags:
 
 <!-- /TOC -->
 
-要求有一个Onedrive非中国区账户，容量随意,如：
+要求有一个Onedrive世纪互联账户，容量随意,如：
 ![img](/img/post/oneindex/09.png)
 放置下载的文件的目录为`/home/download`，可自行修改
 
