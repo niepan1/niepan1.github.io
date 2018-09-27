@@ -31,7 +31,7 @@ Alita Battle Angel  MP4
 <video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="800" height="600" controls="controls">
 </video>
 ```
-<video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="800" height="600" controls="controls">
+<video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="80%" height="80%" controls="controls">
 </video>
 
 Detroit  MKV
