@@ -20,26 +20,24 @@ tags:
 
 <!-- /TOC -->
 
-要求有一个Onedrive世纪互联账户，容量随意,如：
-![img](/img/post/oneindex/09.png)
-放置下载的文件的目录为`/home/download`，可自行修改
+本文设置的放置下载的文件的目录为 `/home/download` ，可自行修改
 
 
 视频外链示例:
-Alita Battle Angel  MP4
+Alita Battle Angel  MP4格式
 ```
-<video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="80%" height="80%" controls="controls">
+<video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="100%" height="100%" controls="controls" type="video/mp4">
 </video>
 ```
-<video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="80%" height="80%" controls="controls">
+<video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="100%" height="100%" controls="controls" type="video/mp4">
 </video>
 
-Detroit  MKV
+Detroit  MKV格式
 ```
-<video src="https://delta.whoa.top/%E6%B5%8B%E8%AF%95_%E5%BA%95%E7%89%B9%E5%BE%8B.mkv" width="80%" height="80%" controls="controls">
+<video src="https://delta.whoa.top/%E6%B5%8B%E8%AF%95_%E5%BA%95%E7%89%B9%E5%BE%8B.mkv" width="100%" height="100%" controls="controls" type="video/mkv">
 </video>
 ```
-<video src="https://delta.whoa.top/%E6%B5%8B%E8%AF%95_%E5%BA%95%E7%89%B9%E5%BE%8B.mkv" width="800" height="80%" controls="controls">
+<video src="https://delta.whoa.top/%E6%B5%8B%E8%AF%95_%E5%BA%95%E7%89%B9%E5%BE%8B.mkv" width="100%" height="100%" controls="controls" type="video/mkv">
 </video>
 
 音频外链示例:
