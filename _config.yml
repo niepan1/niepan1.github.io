@@ -93,16 +93,16 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 # Friends
 friends: [
     {
-         title: "网盘",
+         title: "盘",
          href: "https://delta.whoa.top/"
      },{
         title: "贴吧云签到",
-        href: "http://sign.whoa.top/"
+        href: "http://whoa.top/"
     },{
         title: "ARIA2网页界面",
         href: "https://aria2.net/"
     },{
         title: "SIGMA",
-        href: "http://sigma.whoa.top//"
+        href: "http://sigma.whoa.top/"
     }
 ]

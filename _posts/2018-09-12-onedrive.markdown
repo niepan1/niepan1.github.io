@@ -8,8 +8,6 @@ tags:
     - 技术
 ---
 
-演示地址:https://delta.whoa.top/
-
 <!-- TOC -->
 
 - [安装宝塔面板](#安装宝塔面板)
@@ -20,7 +18,7 @@ tags:
 
 <!-- /TOC -->
 
-本文设置的放置下载的文件的目录为 `/home/download` ，可自行修改
+本文设置的下载文件放置目录为 `/home/download` ，可自行修改
 
 
 视频外链示例:
@@ -30,14 +28,6 @@ Alita Battle Angel  MP4格式
 </video>
 ```
 <video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="100%" height="100%" controls="controls" type="video/mp4">
-</video>
-
-Detroit  MKV格式
-```
-<video src="https://delta.whoa.top/%E6%B5%8B%E8%AF%95_%E5%BA%95%E7%89%B9%E5%BE%8B.mkv" width="100%" height="100%" controls="controls" type="video/mkv">
-</video>
-```
-<video src="https://delta.whoa.top/%E6%B5%8B%E8%AF%95_%E5%BA%95%E7%89%B9%E5%BE%8B.mkv" width="100%" height="100%" controls="controls" type="video/mkv">
 </video>
 
 音频外链示例:
@@ -54,32 +44,31 @@ GlassWalls.mp3
 
 # 安装宝塔面板
 Centos安装命令：
+
 ```yum install -y wget && wget -O install.sh http://download.bt.cn/install/install.sh && sh install.sh```
 
 Ubuntu/Deepin安装命令：
+
 ```wget -O install.sh http://download.bt.cn/install/install-ubuntu.sh && sudo bash install.sh```
 
 Debian安装命令：
+
 ```wget -O install.sh http://download.bt.cn/install/install-ubuntu.sh && bash install.sh```
 
 Fedora安装命令:
+
 ```wget -O install.sh http://download.bt.cn/install/install.sh && bash install.sh```
 
-安装完成后登陆面板，安装LNMP(PHP >= 5.6)
-![img](/img/post/oneindex/02.png)
+安装完成后登陆面板，安装NGINX和PHP(PHP >= 5.6)
 
 # 安装并配置aria2
 在安装LNMP过程中，可以不用等它安装完，这边同时安装aria2
 
-Aria2一键安装脚本（逗比制作）
-
-`wget -N --no-check-certificate https://softs.loan/Bash/aria2.sh && chmod +x aria2.sh && bash aria2.sh`
-
-如果上面这个脚本无法下载，尝试使用备用下载：
+Aria2一键安装脚本
 
 `wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/aria2.sh && chmod +x aria2.sh && bash aria2.sh`
 
-然后输入 `bash aria2.sh`，选择修改配置文件，修改dir为`/home/download`,并在最后插入新的一行`on-download-complete=/root/autoupload.sh`
+然后输入 `bash aria2.sh`，选择修改配置文件，修改dir为`/home/download`,并在最后插入新的一行 `on-download-complete=/root/autoupload.sh`
 
 ![img](/img/post/oneindex/05.png)
 
@@ -147,7 +136,7 @@ fi
 done
 ```
 
-给予脚本执行权`chmod +x autoupload.sh`,并在面板放行aria2端口(教程为6800，可自行设定)
+给予脚本执行权`chmod +x autoupload.sh`,并在面板放行aria2端口(默认为6800，可自行设定)
 
 ![img](/img/post/oneindex/03.png)
 
@@ -210,7 +199,7 @@ export api_reply_url="https://onedrive.live.com/about/business/"
 # 使用
 懒得自己装aria2面板了，直接打开 [http://aria2.net/](http://aria2.net/)
 
-选择AriaNg设置中的RPC项，填入正确的IP地址和密匙，上面提到
+选择AriaNg设置中的RPC项，填入正确的地址和密匙，上面提到
 ```
 Aria2 简单配置信息：
 
