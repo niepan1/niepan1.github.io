@@ -82,11 +82,11 @@ code为`1`
 
 先转换为ts格式；
 
-for i in {1..2};do ffmpeg -i $i.flv -c copy -bsf:v h264_mp4toannexb -f mpegts $i.ts;done
+`for i in {1..2};do ffmpeg -i $i.flv -c copy -bsf:v h264_mp4toannexb -f mpegts $i.ts;done`
 
 进行合并即可
 
-ffmpeg -i "concat:1.ts|2.ts" -c copy -bsf:a aac_adtstoasc -movflags +faststart 01.mp4
+`ffmpeg -i "concat:1.ts|2.ts" -c copy -bsf:a aac_adtstoasc -movflags +faststart 01.mp4`
 
 最后结果
 <video src="https://delta.whoa.top/video/Detroit_BGM.mp4" width="100%" height="100%" controls="controls" type="video/mp4">
