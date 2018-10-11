@@ -1,9 +1,9 @@
 ---
 layout:     post
-title:      "安装Oneindex及配置aria2下载完成后自动上传至Onedirve"
+title:      "安装Oneindex&aria2下载完成后自动上传至Onedirve&Onedrive跨域显示字幕"
 date:       2018-09-12
 author:     "xx"
-header-img: "img/bg-01.png"
+header-img: "img/11.jpg"
 tags:
     - 技术
 ---
@@ -15,6 +15,7 @@ tags:
 - [安装Oneindex](#安装oneindex)
 - [配置Onedrive上传](#配置onedrive上传)
 - [使用](#使用)
+- [Oneindex 字幕](#oneindex-字幕)
 
 <!-- /TOC -->
 
@@ -23,12 +24,12 @@ tags:
 
 视频外链示例:
 按照Oneindex上面的提示HTML引用,是只有一个`<video>`标签的，需要自己另外加controls，没有这个就没有控制器，播放不了，还有就是视频的宽和高，不设置的话会超出页面的尺寸(还有就是格式要对，不然MKV用MP4格式默认打开是加载失败要在点击一次播放键?)
-Alita Battle Angel  MP4格式
+Stellaris  MP4格式
 ```
-<video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="100%" height="100%" controls="controls" type="video/mp4">
+<video src="https://delta.whoa.top/video/Stellaris.mp4" width="100%" height="100%" controls="controls" type="video/mp4">
 </video>
 ```
-<video src="https://delta.whoa.top/Alita%20Battle%20Angel.mp4" width="100%" height="100%" controls="controls" type="video/mp4">
+<video src="https://delta.whoa.top/video/Stellaris.mp4" width="100%" height="100%" controls="controls" type="video/mp4">
 </video>
 
 Detroit MKV 格式
@@ -222,6 +223,175 @@ Aria2 简单配置信息：
 
 那么IP就是 `1.1.1.1`,密匙是`cde45d8274b598e96ae2`,下载时确认下载目录是否为`/home/download`
 
+# Oneindex 字幕
+
+最终效果
+![](https://delta.whoa.top/post/ffmpeg/10.jpg)
+
+![](https://delta.whoa.top/post/ffmpeg/11.jpg)
+
+
+示例请移步到 `https://delta.whoa.top/video/` 视频名称为Stellaris.mp4
+
+操作步骤
+一、在view文件中新建js文件夹，然后下载https://github.com/Dador/JavascriptSubtitlesOctopus/tree/master/js/asmjs 中的四个文件，并放在新建的js文件夹中
+
+二、修改模版文件video.php（文件在view/material或nexmoe/show，后台选择哪个，就修改哪个。）
+(要注意的是你修改的video.php文件和你的视频输出播放器有关，你用哪个播放就用哪个播放器)
+![](https://delta.whoa.top/post/ffmpeg/12.jpg)
+
+这是原代码
+```
+<?php view::layout('layout')?>
+ 
+<?php 
+$item['thumb'] = onedrive::thumbnail($item['path']);
+?>
+ 
+<?php view::begin('content');?>
+<div class="mdui-container-fluid">
+	<br>
+	<video class="mdui-video-fluid mdui-center" preload controls poster="<?php @e($item['thumb']);?>">
+	  <source src="<?php e($item['downloadUrl']);?>" type="video/mp4">
+	</video>
+	<br>
+	<!-- 固定标签 -->
+	<div class="mdui-textfield">
+	  <label class="mdui-textfield-label">下载地址</label>
+	  <input class="mdui-textfield-input" type="text" value="<?php e($url);?>"/>
+	</div>
+	<div class="mdui-textfield">
+	  <label class="mdui-textfield-label">引用地址</label>
+	  <textarea class="mdui-textfield-input"><video><source src="<?php e($url);?>" type="video/mp4"></video></textarea>
+	</div>
+</div>
+<a href="<?php e($url);?>" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
+<?php view::end('content');?>
+```
+修改后的文件（把video2.php复制一份改改就行）
+```
+<?php view::layout('layout')?>
+ 
+<?php 
+//仅支持教育版和企业版
+if(strpos($item['downloadUrl'],"sharepoint.com") == false){
+	header('Location: '.$item['downloadUrl']);exit();
+}
+$item['thumb'] = onedrive::thumbnail($item['path']);
+$mpd =  str_replace("thumbnail","videomanifest",$item['thumb'])."&part=index&format=dash&useScf=True&pretranscode=0&transcodeahead=0";
+?>
+ 
+<?php view::begin('content');?>
+<link class="dplayer-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/dashjs/dist/dash.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js"></script>
+<script src="//pan.mals.shop/view/js/subtitles-octopus.js"></script>
+<div class="mdui-container-fluid">
+	<div class="nexmoe-item">
+		<div class="mdui-center" id="dplayer"></div>
+	<!-- 固定标签 -->
+	<div class="mdui-textfield">
+	  <label class="mdui-textfield-label">下载地址</label>
+	  <input class="mdui-textfield-input" type="text" value="<?php e($url);?>"/>
+	</div>
+	<div class="mdui-textfield">
+	  <label class="mdui-textfield-label">引用地址</label>
+	  <textarea class="mdui-textfield-input"><video><source src="<?php e($url);?>" type="video/mp4"></video></textarea>
+	</div>
+</div>
+<script>
+const dp = new DPlayer({
+	container: document.getElementById('dplayer'),
+	lang:'zh-cn',
+	video: {
+	    url: '<?php e($item['downloadUrl']);?>',
+	    pic: '<?php @e($item['thumb']);?>',
+	    type: 'auto'
+	},
+      subtitle: {
+        url: '<?php $urlparts = pathinfo($url); e($urlparts['dirname'].'/'.$urlparts['filename'].'.vtt');?>',
+        type: 'webvtt',
+        fontSize: '25px',
+        bottom: '5%',
+        color: '#ffffff'
+    }
+});
+dp.on('canplay', function () {
+    var video = document.getElementsByTagName('video')[0];
+    window.SubtitlesOctopusOnLoad = function () {
+        var options = {
+            video: video,
+            subUrl: '<?php $urlparts = pathinfo($url); e($urlparts['dirname'].'/'.$urlparts['filename'].'.ass');?>',
+            fonts: ["//gapis.geekzu.org/g-fonts/ea/notosanssc/v1/NotoSansSC-Regular.otf", "//gapis.geekzu.org/g-fonts/ea/notosanstc/v1/NotoSansTC-Regular.otf", "//gapis.geekzu.org/g-fonts/ea/notosansjapanese/v6/NotoSansJP-Regular.otf"],
+            workerUrl: '//pan.mals.shop/view/js/subtitles-octopus-worker.js'
+        };
+        window.octopusInstance = new SubtitlesOctopus(options);
+   };
+    if (SubtitlesOctopus) {
+       SubtitlesOctopusOnLoad();
+   }
+})
+</script>
+<a href="<?php e($url);?>" class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">file_download</i></a>
+<?php view::end('content');?>
+```
+修改注释：
+
+1、调用第一步下载的文件，域名修改成你自己的（教程里中的地址会随时改变）
+```
+1、<script src="//pan.mals.shop/view/js/subtitles-octopus.js"></script>
+2、workerUrl: '//pan.mals.shop/view/js/subtitles-octopus-worker.js'
+```
+2、这是DPlayer字幕参数配置
+```
+      subtitle: {
+        url: '<?php $urlparts = pathinfo($url); e($urlparts['dirname'].'/'.$urlparts['filename'].'.vtt');?>',
+        #字幕位置
+        type: 'webvtt',
+        #字幕格式
+        fontSize: '15px',
+        #字幕文字大小
+        bottom: '5%',
+        #到底视频底部位置
+        color: '#ffffff'
+        #文字颜色
+    }
+```
+3、ASS/SSA配置
+```
+dp.on('canplay', function () {
+    var video = document.getElementsByTagName('video')[0];
+    window.SubtitlesOctopusOnLoad = function () {
+        var options = {
+            video: video,
+            subUrl: '<?php $urlparts = pathinfo($url); e($urlparts['dirname'].'/'.$urlparts['filename'].'.ass');?>',
+            #字幕位置
+            fonts: ["//gapis.geekzu.org/g-fonts/ea/notosanssc/v1/NotoSansSC-Regular.otf", "//gapis.geekzu.org/g-fonts/ea/notosanstc/v1/NotoSansTC-Regular.otf", "//gapis.geekzu.org/g-fonts/ea/notosansjapanese/v6/NotoSansJP-Regular.otf"],
+            #引用字体
+            workerUrl: '//pan.mals.shop/view/js/subtitles-octopus-worker.js'
+        };
+        window.octopusInstance = new SubtitlesOctopus(options);
+   };
+    if (SubtitlesOctopus) {
+       SubtitlesOctopusOnLoad();
+   }
+})
+```
+字幕文件名字一定要和视频名字一致。
+
+字幕文件名字一定要和视频名字一致。
+
+字幕文件名字一定要和视频名字一致。
+
+但是，到这里只能在Firfox（火狐）浏览器中才能显示字幕
+
+因为在其它浏览器中字幕文件会提示
+
+`XXXXXXXXXX  has been blocked by CORS policy XXXXXXXXXX`
+
+解决方法：Chrome浏览器安装插件 allow-control-allow-origi  或 access-control-allow-origin（推荐），安装之后开启插件就可以正常显示字幕了。
+
+
 参考资料:
 
 https://moeclub.org/2017/03/17/24/
@@ -229,3 +399,5 @@ https://moeclub.org/2017/03/17/24/
 https://www.234du.com/1171.html
 
 https://www.234du.com/1170.html
+
+https://www.234du.com/1185.html

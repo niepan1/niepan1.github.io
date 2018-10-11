@@ -16,7 +16,7 @@ tags:
 
 `https://github.com/Huxpro/huxpro.github.io`
 
-__不信我说的你可以去看源码，我的网站有问题我直播吃屎__
+__不信我说的你可以去看源码__
 
 
 这个事要从前几天说起
