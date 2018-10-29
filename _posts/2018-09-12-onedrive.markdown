@@ -21,35 +21,9 @@ tags:
 
 本文设置的下载文件放置目录为 `/home/download` ，可自行修改
 
+__已知问题__
 
-视频外链示例:
-按照Oneindex上面的提示HTML引用,是只有一个`<video>`标签的，需要自己另外加controls，没有这个就没有控制器，播放不了，还有就是视频的宽和高，不设置的话会超出页面的尺寸(还有就是格式要对，不然MKV用MP4格式默认打开是加载失败要在点击一次播放键?)
-Stellaris  MP4格式
-```
-<video src="https://delta.whoa.top/video/Stellaris.mp4" width="100%" height="100%" controls="controls" type="video/mp4">
-</video>
-```
-<video src="https://delta.whoa.top/video/Stellaris.mp4" width="100%" height="100%" controls="controls" type="video/mp4">
-</video>
-
-Detroit MKV 格式
-```
-<video src="https://delta.whoa.top/%E6%B5%8B%E8%AF%95_%E5%BA%95%E7%89%B9%E5%BE%8B.mkv" width="100%" height="100%" controls="controls" type="video/mkv">
-</video>
-```
-<video src="https://delta.whoa.top/%E6%B5%8B%E8%AF%95_%E5%BA%95%E7%89%B9%E5%BE%8B.mkv" width="100%" height="100%" controls="controls" type="video/mkv">
-</video>
-
-音频外链示例:
-GlassWalls.mp3
-```
-<audio controls="">
-<source src="https://delta.whoa.top/others/GlassWalls.mp3">
-</audio>
-```
-<audio controls="">
-<source src="https://delta.whoa.top/others/GlassWalls.mp3">
-</audio>
+字幕仅在 Firefox 和 Edge 上可以看到，手机浏览器多数对MKV格式的文件播放有性能问题(帧数较低，有卡顿感,除了小米默认浏览器没这个毛病)
 
 
 # 安装宝塔面板
@@ -96,55 +70,7 @@ Aria2 简单配置信息：
 
 在/root目录下新建文件autoupload.sh
 
-```
-#!/bin/bash
-num="$2"
-path="$3" 
-downloadpath='/home/download'
- 
-if [ $num -eq 0 ]
-    then
-      exit 0
-fi
- 
-function getdir(){
-IFS=$'\n';for file in `ls "$1"`
-    do
-        if [ -d "$1/$file" ]  
-        then
-            getdir "$1/$file"
-        else
-            if [ "${1%/*}" = "$downloadpath" ] && [ $num -eq 1 ]
-            then
-                onedrive "$1"
-            elif [ $num -eq 1 ] 
-            then
-                onedrive "$1/$file"
-            else
-                onedrive -u "$downloadpath" "$1/$file"
-                fi
-        fi
-    done
-}
- 
-while true; do
-filepath=$path 
-path=${path%/*};   
-if [ "$path" = "$downloadpath" ] 
-    then  
-      getdir "$filepath"
-      if [ -d $filepath ]
-      then
-        rm -r "$filepath"
-      else
-        rm  "$filepath"
-      fi
-      echo 3 > /proc/sys/vm/drop_caches
-      swapoff -a && swapon -a
-      exit 0
-fi
-done
-```
+__由于睿智的??系统导致这个脚本显示错误，直接复制的无法使用，请移步 https://sigma.whoa.top/post/one/autoupload.sh 观看__
 
 给予脚本执行权`chmod +x autoupload.sh`,并在面板放行aria2端口(默认为6800，可自行设定)
 
@@ -178,9 +104,9 @@ rewrite ^/(.*)$ /index.php?/$1 last;
 # 配置Onedrive上传
 `wget --no-check-certificate -q -O /tmp/OneDrive.sh "https://raw.githubusercontent.com/weiyidu/OneDrive/master/OneDrive.sh" && chmod +x /tmp/OneDrive.sh && bash /tmp/OneDrive.sh`
 
-请将三个参数填入/usr/local/etc/OneDrive/onedrive.cfg.
+请将三个参数填入`/usr/local/etc/OneDrive/onedrive.cfg`
 如下示例:
-```
+```js
 export api_client_id="ea2b36f6-b8ad-40be-bc0f-e5e4a4a7d4fa"
 export api_client_secret="h27zG8pr8BNsLU0JbBh5AOznNS5Of5Y540l/koc7048="
 export api_reply_url="https://onedrive.live.com/about/business/"
@@ -241,7 +167,7 @@ Aria2 简单配置信息：
 ![](https://delta.whoa.top/post/ffmpeg/12.jpg)
 
 这是原代码
-```
+```php
 <?php view::layout('layout')?>
  
 <?php 
@@ -269,7 +195,7 @@ $item['thumb'] = onedrive::thumbnail($item['path']);
 <?php view::end('content');?>
 ```
 修改后的文件（把video2.php复制一份改改就行）
-```
+```php
 <?php view::layout('layout')?>
  
 <?php 
@@ -311,8 +237,8 @@ const dp = new DPlayer({
       subtitle: {
         url: '<?php $urlparts = pathinfo($url); e($urlparts['dirname'].'/'.$urlparts['filename'].'.vtt');?>',
         type: 'webvtt',
-        fontSize: '25px',
-        bottom: '5%',
+        fontSize: '29px',
+        bottom: '2%',
         color: '#ffffff'
     }
 });
@@ -343,22 +269,22 @@ dp.on('canplay', function () {
 2、workerUrl: '//pan.mals.shop/view/js/subtitles-octopus-worker.js'
 ```
 2、这是DPlayer字幕参数配置
-```
+```php
       subtitle: {
         url: '<?php $urlparts = pathinfo($url); e($urlparts['dirname'].'/'.$urlparts['filename'].'.vtt');?>',
         #字幕位置
         type: 'webvtt',
         #字幕格式
-        fontSize: '15px',
+        fontSize: '29px',
         #字幕文字大小
-        bottom: '5%',
+        bottom: '2%',
         #到底视频底部位置
         color: '#ffffff'
         #文字颜色
     }
 ```
 3、ASS/SSA配置
-```
+```php
 dp.on('canplay', function () {
     var video = document.getElementsByTagName('video')[0];
     window.SubtitlesOctopusOnLoad = function () {
@@ -383,13 +309,53 @@ dp.on('canplay', function () {
 
 字幕文件名字一定要和视频名字一致。
 
-但是，到这里只能在Firfox（火狐）浏览器中才能显示字幕
+但是，到这里只能在Firfox(火狐或) 微软的Edge 浏览器中才能显示字幕(其他未测试)
 
 因为在其它浏览器中字幕文件会提示
 
 `XXXXXXXXXX  has been blocked by CORS policy XXXXXXXXXX`
 
 解决方法：Chrome浏览器安装插件 allow-control-allow-origi  或 access-control-allow-origin（推荐），安装之后开启插件就可以正常显示字幕了。
+
+示例
+
+![](https://sigma.whoa.top/post/one/N7.jpg)
+![](https://sigma.whoa.top/post/one/N6.jpg)
+![](https://sigma.whoa.top/post/one/N2.jpg)
+![](https://sigma.whoa.top/post/one/N3.jpg)
+![](https://sigma.whoa.top/post/one/N4.jpg)
+
+
+视频外链示例:
+按照Oneindex上面的提示HTML引用,是只有一个`<video>`标签的，需要自己另外加controls，没有这个就没有控制器，播放不了，还有就是视频的宽和高，不设置的话会超出页面的尺寸(还有就是格式要对，不然MKV用MP4格式默认打开是加载失败要在点击一次播放键?)
+
+Stellaris  MP4格式
+```html
+<video src="https://delta.whoa.top/video/Stellaris.mp4" width="100%" height="100%" controls="controls" type="video/mp4">
+</video>
+```
+<video src="https://delta.whoa.top/video/Stellaris.mp4" width="100%" height="100%" controls="controls" type="video/mp4">
+</video>
+
+Detroit MKV 格式
+```html
+<video src="https://delta.whoa.top/%E6%B5%8B%E8%AF%95_%E5%BA%95%E7%89%B9%E5%BE%8B.mkv" width="100%" height="100%" controls="controls" type="video/mkv">
+</video>
+```
+<video src="https://delta.whoa.top/%E6%B5%8B%E8%AF%95_%E5%BA%95%E7%89%B9%E5%BE%8B.mkv" width="100%" height="100%" controls="controls" type="video/mkv">
+</video>
+
+音频外链示例:
+GlassWalls.mp3
+```html
+<audio controls="">
+<source src="https://delta.whoa.top/others/GlassWalls.mp3">
+</audio>
+```
+<audio controls="">
+<source src="https://delta.whoa.top/others/GlassWalls.mp3">
+</audio>
+
 
 
 参考资料:

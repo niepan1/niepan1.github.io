@@ -7,6 +7,14 @@ header-img: "img/13.jpg"
 tags:
     - 技术
 ---
+# 结论
+综下
+
+如果一条视频有1080P的选项
+
+那么直接`youtube-dl -f 137+140 URL`
+
+自己替换URL中的值
 # 安装
 
 基于Ubuntu 16.04
