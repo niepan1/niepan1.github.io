@@ -12,7 +12,8 @@ tags:
 
 如果一条视频有1080P的选项
 
-那么直接`youtube-dl -f 137+140 URL`
+获取MP4格式，直接`youtube-dl -f 137+140 URL`
+获取webm格式，直接`youtube-dl -f 248+251 URL`
 
 自己替换URL中的值
 # 安装
